@@ -18,9 +18,9 @@ export default class RootNavigator extends React.Component {
 
         return (
             <NavigationContainer>
-                <Stack.Navigator initialRouteName="Home">
-                    <Stack.Screen name="Login" component={HomeScreen} />
-                    <Stack.Screen name="Home" component={LoginScreen} />
+                <Stack.Navigator initialRouteName="Login">
+                    <Stack.Screen name="Login" component={LoginScreen} />
+                    <Stack.Screen name="Home" component={HomeScreen} />
                 </Stack.Navigator>
             </NavigationContainer>
         );

@@ -4,11 +4,13 @@ import FBLoginButton from '../../components/FBLoginButton'
 
 export default class LoginScreen extends Component {
     render() {
+        // const { navigate } = this.props.navigation;
+
         return (
             <View style={styles.container}>
                 <Text style={styles.label}> Login With Facebook</Text>
                 <FBLoginButton />
-                <Button title="Login Screen" onPress={() => navigation.navigate('Login')} />
+                <Button title="Home Screen" onPress={() => this.props.navigation.navigate('Home')} />
             </View>
         );
     }
