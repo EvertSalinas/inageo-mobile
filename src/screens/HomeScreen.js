@@ -1,12 +1,21 @@
-import * as React from 'react';
+import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
+import { connect } from 'react-redux';
 
-const HomeScreen = ({ navigate }) => {
-    return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-            <Text>Home Screen</Text>
-        </View>
-    );
+class HomeScreen extends Component {
+    render() {
+        return (
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <Text>Home Screen</Text>
+                <Text>{this.props.userState.email}</Text>
+            </View>
+        );
+    }
 }
 
-export default HomeScreen;
+const mapStateToProps = (state) => {
+    const { userState } = state
+    return { userState }
+}
+
+export default connect(mapStateToProps)(HomeScreen);

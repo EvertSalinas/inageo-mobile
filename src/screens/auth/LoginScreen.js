@@ -1,16 +1,21 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import React, { Component, useEffect } from 'react';
+import { View, Text, StyleSheet, Button, TextInput } from 'react-native';
 import FBLoginButton from '../../components/FBLoginButton'
+import LoginForm from '../../components/LoginForm'
 
 export default class LoginScreen extends Component {
     render() {
-        // const { navigate } = this.props.navigation;
-
         return (
             <View style={styles.container}>
-                <Text style={styles.label}> Login With Facebook</Text>
-                <FBLoginButton />
-                <Button title="Home Screen" onPress={() => this.props.navigation.navigate('Home')} />
+                <View style={styles.formContainer}>
+                    <Text style={styles.titleStyle}> Login With Facebook</Text>
+                    <LoginForm />
+                    <View style={styles.divider} />
+                    <View style={{ alignSelf: "center" }}>
+                        <FBLoginButton />
+                    </View>
+                    <Button title="Home Screen" onPress={() => this.props.navigation.navigate('Home')} />
+                </View>
             </View>
         );
     }
@@ -19,13 +24,23 @@ export default class LoginScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: '#F5FCFF',
+        padding: 10,
+        // justifyContent: "center"
     },
-    label: {
-        fontSize: 16,
-        fontWeight: 'normal',
-        marginBottom: 48,
+    titleStyle: {
+        fontSize: 18,
+        marginVertical: 20
+    },
+    formContainer: {
+        flex: 1,
+        borderColor: "#FFF222",
+        flexDirection: "column",
+        alignItems: "stretch"
+    },
+    divider: {
+        borderBottomColor: '#000000',
+        borderBottomWidth: 1,
+        marginVertical: 20,
     },
 });

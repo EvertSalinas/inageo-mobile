@@ -1,9 +1,11 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-// import store from '.app/store';
-// import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
+import userReducer from './src/reducers/UserReducer.js';
 import InageoApp from './src/InageoApp.js';
+
 
 // Store
 /**
@@ -15,11 +17,14 @@ import InageoApp from './src/InageoApp.js';
  * - only mandatory argument is the 'type'
  * Subscriber - listens for state change to update the ui
  */
+const store = createStore(userReducer);
 
 export default class App extends React.Component {
   render() {
     return (
-      <InageoApp />
+      <Provider store={store}>
+        <InageoApp />
+      </Provider>
     )
   }
 }
