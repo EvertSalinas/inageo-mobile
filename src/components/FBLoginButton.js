@@ -1,8 +1,29 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { LoginButton, AccessToken } from 'react-native-fbsdk';
+import { signInUser } from "../actions/UserActions"
+import API from "../api/config";
 
 export default class FBLoginButton extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { username: '', password: '' };
+        this._signIn = this._signIn.bind(this);
+    }
+
+    // abstract user login to another file
+    _signIn(token) {
+        API.post('/token/facebook', {
+            token: token
+        }).then(response => {
+            this.props.signInUser(response.data.access, response.data.refresh)
+            // this.props.navigation.navigate('Home')
+        }).catch(error => {
+            // Show error or redirect
+            console.log(error);
+        });
+    }
+
     render() {
         return (
             <View>
@@ -11,18 +32,16 @@ export default class FBLoginButton extends Component {
                     onLoginFinished={
                         (error, result) => {
                             if (error) {
-                                alert("Login failed with error: " + error.message);
+                                console.log("login has error: " + result.error);
                             } else if (result.isCancelled) {
-                                alert("Login was cancelled");
+                                console.log("login is cancelled.");
                             } else {
-                                alert("Login was successful with permissions: " + result.grantedPermissions)
-                                AccessToken.getCurrentAccessToken()
-                                    .then((data) => {
-                                        callback(data.accessToken)
-                                    })
-                                    .catch(error => {
-                                        console.log(error)
-                                    })
+                                AccessToken.getCurrentAccessToken().then(
+                                    (data) => {
+                                        console.log(data.accessToken.toString())
+                                        // this._signIn(data.accessToken.toString())
+                                    }
+                                )
                             }
                         }
                     }

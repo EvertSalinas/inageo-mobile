@@ -1,20 +1,22 @@
 import React, { Component, useEffect } from 'react';
 import { View, Text, StyleSheet, Button, TextInput } from 'react-native';
-import FBLoginButton from '../../components/FBLoginButton'
-import LoginForm from '../../components/LoginForm'
+import FBLoginButton from '../../components/FBLoginButton';
+import SignInForm from '../../components/SignInForm';
+import GoogleSignInComponent from '../../components/GoogleSignInComponent';
 
-export default class LoginScreen extends Component {
+export default class SignInScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
                 <View style={styles.formContainer}>
-                    <Text style={styles.titleStyle}> Login With Facebook</Text>
-                    <LoginForm />
+                    <Text style={styles.titleStyle}> Enter your credentials </Text>
+                    <SignInForm />
                     <View style={styles.divider} />
                     <View style={{ alignSelf: "center" }}>
                         <FBLoginButton />
                     </View>
                     <Button title="Home Screen" onPress={() => this.props.navigation.navigate('Home')} />
+                    <GoogleSignInComponent />
                 </View>
             </View>
         );

@@ -1,6 +1,12 @@
-export const saveCredentials = email => (
+export const signInUser = (access, refresh) => (
     {
-        type: "STORE_CREDENTIALS",
-        payload: email,
+        type: "SIGN_IN",
+        payload: { access, refresh },
+    }
+);
+
+export const signOutUser = () => (
+    {
+        type: "SIGN_OUT"
     }
 );
