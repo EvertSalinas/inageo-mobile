@@ -25,7 +25,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb251181332565257</string>
+				<string>fb208585043699724</string>
 			</array>
 		</dict>
 		<dict>
@@ -40,9 +40,9 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>FacebookAppID</key>
-	<string>251181332565257</string>
+	<string>208585043699724</string>
 	<key>FacebookDisplayName</key>
-	<string>inageo-mobile-dev</string>
+	<string>Inageo</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>

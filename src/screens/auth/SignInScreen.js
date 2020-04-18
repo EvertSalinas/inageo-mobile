@@ -1,22 +1,16 @@
 import React, { Component, useEffect } from 'react';
 import { View, Text, StyleSheet, Button, TextInput } from 'react-native';
 import FBLoginButton from '../../components/FBLoginButton';
-import LoginForm from '../../components/LoginForm';
+import SignInForm from '../../components/SignInForm';
 import GoogleSignInComponent from '../../components/GoogleSignInComponent';
-import axios from 'axios';
 
-export default class LoginScreen extends Component {
+export default class SignInScreen extends Component {
     render() {
-        // axios.get('http://inageo-development.us-west-2.elasticbeanstalk.com/api/token/')
-        axios.get('https://dog.ceo/api/breeds/image/random')
-            .then(response => console.log(response.data))
-            .catch(err => console.log(err))
-
         return (
             <View style={styles.container}>
                 <View style={styles.formContainer}>
-                    <Text style={styles.titleStyle}> Login With Facebook</Text>
-                    <LoginForm />
+                    <Text style={styles.titleStyle}> Enter your credentials </Text>
+                    <SignInForm />
                     <View style={styles.divider} />
                     <View style={{ alignSelf: "center" }}>
                         <FBLoginButton />
