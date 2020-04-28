@@ -1,28 +1,19 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 // Screens
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 
-const Drawer = createDrawerNavigator();
+const Tab = createBottomTabNavigator();
 
 export default class MainNavigator extends React.Component {
     render() {
         return (
-            <Drawer.Navigator initialRouteName="Home">
-                <Drawer.Screen name="Home" component={HomeScreen} />
-                <Drawer.Screen name="Profile" component={ProfileScreen} />
-            </Drawer.Navigator>
+            <Tab.Navigator initialRouteName="Home">
+                <Tab.Screen name="Home" component={HomeScreen} />
+                <Tab.Screen name="Profile" component={ProfileScreen} />
+            </Tab.Navigator>
         );
     }
 }
-
-
-// const mapStateToProps = (state) => {
-//     const { userState } = state
-//     return { userState }
-// }
-
-// export default connect(mapStateToProps)(AuthNavigator);

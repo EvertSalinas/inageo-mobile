@@ -1,5 +1,5 @@
-import React, { Component, useEffect } from 'react';
-import { View, Text, StyleSheet, Button, TextInput } from 'react-native';
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, Button } from 'react-native';
 import FBLoginButton from '../../components/FBLoginButton';
 import SignInForm from '../../components/SignInForm';
 import GoogleSignInComponent from '../../components/GoogleSignInComponent';
@@ -15,7 +15,6 @@ export default class SignInScreen extends Component {
                     <View style={{ alignSelf: "center" }}>
                         <FBLoginButton />
                     </View>
-                    <Button title="Home Screen" onPress={() => this.props.navigation.navigate('Home')} />
                     <GoogleSignInComponent />
                 </View>
             </View>

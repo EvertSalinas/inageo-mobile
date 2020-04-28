@@ -23,9 +23,6 @@ class RootNavigator extends React.Component {
                     <RootStack.Screen
                         name="Main"
                         component={MainNavigator}
-                        options={{
-                            animationEnabled: false
-                        }}
                     />
                 ) : (
                         <RootStack.Screen

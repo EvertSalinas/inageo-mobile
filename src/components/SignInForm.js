@@ -29,10 +29,6 @@ class SignInForm extends Component {
     render() {
         return (
             <View>
-                <Text>access: {this.props.userState.accessToken}</Text>
-                <Text>refres: {this.props.userState.refreshToken}</Text>
-                <Text>username: {this.state.username}</Text>
-                <Text>password: {this.state.password}</Text>
                 <Text style={styles.errorMessage}>{this.state.error}</Text>
                 <Text style={styles.inputLabel}> Username </Text>
                 <TextInput
