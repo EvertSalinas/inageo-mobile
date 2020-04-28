@@ -1,23 +1,26 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { LoginButton, AccessToken } from 'react-native-fbsdk';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { signInUser } from "../actions/UserActions"
 import API from "../api/config";
 
-export default class FBLoginButton extends Component {
+class FBLoginButton extends Component {
     constructor(props) {
         super(props);
         this.state = { username: '', password: '' };
-        this._signIn = this._signIn.bind(this);
+        this._handleSignIn = this._handleSignIn.bind(this);
     }
 
-    // abstract user login to another file
-    _signIn(token) {
-        API.post('/token/facebook', {
+    _handleSignIn(token) {
+        API.post('/token/facebook/', {
             token: token
         }).then(response => {
+            console.log("--------")
+            console.log(response.data)
+            console.log("--------")
             this.props.signInUser(response.data.access, response.data.refresh)
-            // this.props.navigation.navigate('Home')
         }).catch(error => {
             // Show error or redirect
             console.log(error);
@@ -38,8 +41,7 @@ export default class FBLoginButton extends Component {
                             } else {
                                 AccessToken.getCurrentAccessToken().then(
                                     (data) => {
-                                        console.log(data.accessToken.toString())
-                                        // this._signIn(data.accessToken.toString())
+                                        this._handleSignIn(data.accessToken.toString())
                                     }
                                 )
                             }
@@ -51,35 +53,10 @@ export default class FBLoginButton extends Component {
     }
 };
 
-module.exports = FBLoginButton;
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({
+        signInUser,
+    }, dispatch)
+);
 
-// import React from 'react';
-// import { View, StyleSheet } from 'react-native';
-// import { LoginButton, AccessToken } from 'react-native-fbsdk';
-
-// export default class FacebookButton extends Component {
-//     render() {
-//         return (
-//             <LoginButton
-//                 onLoginFinished={
-//                     (error, result) => {
-//                         if (error) {
-//                             console.log("login has error: " + result.error);
-//                         } else if (result.isCancelled) {
-//                             console.log("login is cancelled.");
-//                         } else {
-//                             AccessToken.getCurrentAccessToken().then(
-//                                 (data) => {
-//                                     console.log(data.accessToken.toString())
-//                                 }
-//                             )
-//                         }
-//                     }
-//                 }
-//                 onLogoutFinished={() => console.log("logout.")}
-//             />
-//         )
-//     }
-// }
-
-// const styles = StyleSheet.create({});
+export default connect(mapDispatchToProps)(FBLoginButton);

@@ -1,27 +1,22 @@
 /*This is th Example of google Sign in*/
 import React from 'react';
-import {
-    StyleSheet,
-    Text,
-    View,
-    Alert,
-    Image,
-    ActivityIndicator,
-    TouchableOpacity,
-} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import {
     GoogleSignin,
     GoogleSigninButton,
     statusCodes,
 } from 'react-native-google-signin';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { signInUser } from "../actions/UserActions"
+import API from "../api/config";
 
-export default class GoogleSignInComponent extends React.Component {
+class GoogleSignInComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            userInfo: null,
-            gettingLoginStatus: true,
-        };
+        super(props);
+        this.state = { username: '', password: '' };
+        this._handleSignIn = this._handleSignIn.bind(this);
     }
 
     componentDidMount() {
@@ -36,10 +31,26 @@ export default class GoogleSignInComponent extends React.Component {
         this._isSignedIn();
     }
 
+    // abstract user login to another file
+    _handleSignIn(token) {
+        console.log("jajaja")
+        API.post('/token/google/', {
+            id_token: token
+        }).then(response => {
+            console.log("--------")
+            console.log(response.data)
+            console.log("--------")
+            this.props.signInUser(response.data.access_token, response.data.refresh_token)
+        }).catch(error => {
+            // Show error or redirect
+            console.log(error);
+        });
+    }
+
     _isSignedIn = async () => {
         const isSignedIn = await GoogleSignin.isSignedIn();
         if (isSignedIn) {
-            alert('User is already signed in');
+            console.log('User is already signed in');
             //Get the User details as user is already signed in
             this._getCurrentUserInfo();
         } else {
@@ -52,14 +63,11 @@ export default class GoogleSignInComponent extends React.Component {
     _getCurrentUserInfo = async () => {
         try {
             const userInfo = await GoogleSignin.signInSilently();
-            console.log('User Info --> ', userInfo);
-            this.setState({ userInfo: userInfo });
+            this._handleSignIn(userInfo.idToken);
         } catch (error) {
             if (error.code === statusCodes.SIGN_IN_REQUIRED) {
-                alert('User has not signed in yet');
                 console.log('User has not signed in yet');
             } else {
-                alert("Something went wrong. Unable to get user's info");
                 console.log("Something went wrong. Unable to get user's info");
             }
         }
@@ -75,7 +83,7 @@ export default class GoogleSignInComponent extends React.Component {
             });
             const userInfo = await GoogleSignin.signIn();
             console.log('User Info --> ', userInfo);
-            this.setState({ userInfo: userInfo });
+            this._handleSignIn(userInfo.idToken);
         } catch (error) {
             console.log('Message', error.message);
             if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -110,7 +118,7 @@ export default class GoogleSignInComponent extends React.Component {
                     color={GoogleSigninButton.Color.Light}
                     onPress={this._signIn}
                 />
-                <Text>{this.state.userInfo}</Text>
+                {/* <Text>{this.state.userInfo}</Text> */}
             </View>
         );
     }
@@ -136,3 +144,11 @@ const styles = StyleSheet.create({
         marginTop: 30,
     },
 });
+
+const mapDispatchToProps = dispatch => (
+    bindActionCreators({
+        signInUser,
+    }, dispatch)
+);
+
+export default connect(null, mapDispatchToProps)(GoogleSignInComponent);
